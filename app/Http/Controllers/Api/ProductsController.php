@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\DestroyRequest;
 use App\Http\Requests\Products\StoreRequest;
@@ -11,6 +10,11 @@ use App\Models\Product;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+
     public function index()
     {
         // TODO: pagination
