@@ -31,6 +31,15 @@ class Product extends Model
         'price' => 'float',
     ];
 
+    protected $appends = [
+        'desc',
+    ];
+
+    public function getDescAttribute()
+    {
+        return str_limit($this->description, config('app.desc_limit'));
+    }
+
     /**
      * Владелец товара
      *

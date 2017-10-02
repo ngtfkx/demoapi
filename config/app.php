@@ -125,6 +125,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'desc_limit' => env('APP_DESC_LIMIT', 20),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
