@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('login')->unique()->comment('Логин');
             $table->string('email')->unique()->comment('E-mail');
             $table->string('password')->comment('Пароль');
-            $table->string('api_token')->comment('Токен для API');
+            $table->string('api_token')->unique()->comment('Токен для API');
             $table->rememberToken();
             $table->timestamps();
         });
