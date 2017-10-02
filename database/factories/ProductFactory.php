@@ -9,5 +9,7 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
         'price' => $faker->numberBetween(10, 300),
         'user_id' => null,
         'category_id' => null,
+        'photo' => $faker->image(storage_path('app/public/products'), 300, 400, 'food', false),
+        'photo_desc' => ucfirst($faker->words(3, true)),
     ];
 });

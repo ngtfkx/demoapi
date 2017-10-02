@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name Наименование
  * @property string $description Описание
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $children
+ * @property-read \App\Models\Category|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  */
 class Category extends Model
 {

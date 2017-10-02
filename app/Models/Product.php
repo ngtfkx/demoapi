@@ -16,6 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name Наименование
  * @property string $description Описание
  * @mixin \Eloquent
+ * @property string $photo Фото
+ * @property string $photo_desc Описание фото
+ * @property-read \App\Models\Category $category
+ * @property-read mixed $desc
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read \App\Models\User $user
  */
 class Product extends Model
 {
@@ -24,7 +30,7 @@ class Product extends Model
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'user_id', 'category_id',
+        'created_at', 'updated_at', 'user_id', 'category_id', 'photo',
     ];
 
     protected $casts = [
@@ -32,9 +38,32 @@ class Product extends Model
     ];
 
     protected $appends = [
-        'desc',
+        'desc', 'photo_url',
     ];
 
+    /**
+     * URL фотографии
+     */
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo ? config('app.url') . '/storage/photos/' . $this->photo : null;
+    }
+
+    /**
+     * Вывод описания фото
+     *
+     * @return null|string
+     */
+    public function getPhotoDescAttribute()
+    {
+        return $this->photo ? $this->attributes['photo_desc'] : null;
+    }
+
+    /**
+     * Краткое описание
+     *
+     * @return string
+     */
     public function getDescAttribute()
     {
         return str_limit($this->description, config('app.desc_limit'));

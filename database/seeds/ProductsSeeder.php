@@ -11,6 +11,8 @@ class ProductsSeeder extends Seeder
      */
     public function run()
     {
+        delete_loaded_images('app/public/products');
+
         $categories = \App\Models\Category::all();
 
         $tags = \App\Models\Tag::all();

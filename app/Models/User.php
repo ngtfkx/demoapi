@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * App\Models\User
@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @mixin \Eloquent
  * @property string $login Логин
  * @property string $api_token Токен для API
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  */
 class User extends Authenticatable
 {

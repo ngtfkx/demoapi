@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon|null $updated_at
  * @property string $name Тег
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  */
 class Tag extends Model
 {

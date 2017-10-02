@@ -7,6 +7,7 @@ use App\Http\Requests\Products\DestroyRequest;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -64,9 +65,22 @@ class ProductsController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $params = $request->only('name', 'description', 'price');
+        $params = $request->only('name', 'description', 'price', 'category_id');
 
-        $product = Product::create($params);
+        /**
+         * @var User $user
+         */
+        $user = $request->user();
+
+        $product = $user->products()->save(Product::make($params));
+
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $filename = $user->id . '.' . $request->file('photo')->extension();
+
+            $request->file('photo')->storeAs('public/products', $filename);
+
+            $product->photo = $filename;
+        }
 
         return api_success(['data' => $product], 201);
     }
