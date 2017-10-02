@@ -48,7 +48,7 @@ class ProductsController extends Controller
 
         $items = $query->limit($limit)->get();
 
-        $items->load('user', 'category');
+        $items->load('user', 'category', 'tags');
 
         return api_success(['data' => $items]);
     }
@@ -72,6 +72,8 @@ class ProductsController extends Controller
         $params = $request->only('name', 'description', 'price');
 
         $product->update($params);
+
+        $product->load('user', 'category', 'tags');
 
         return api_success(['data' => $product]);
     }
