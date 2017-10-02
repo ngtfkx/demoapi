@@ -46,7 +46,7 @@ class UsersController extends Controller
             'api_token' => $user->api_token,
         ];
 
-        return api_success($data);
+        return api_success($data, 201);
     }
 
     public function show(User $user)

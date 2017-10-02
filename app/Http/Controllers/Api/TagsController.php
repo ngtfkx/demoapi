@@ -30,7 +30,7 @@ class TagsController extends Controller
 
         $tag = Tag::create($params);
 
-        return api_success(['data' => $tag]);
+        return api_success(['data' => $tag], 201);
     }
 
     public function show(Tag $tag)

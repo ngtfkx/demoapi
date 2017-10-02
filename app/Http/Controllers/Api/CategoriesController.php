@@ -30,7 +30,7 @@ class CategoriesController extends Controller
 
         $category = Category::create($params);
 
-        return api_success(['data' => $category]);
+        return api_success(['data' => $category], 201);
     }
 
     public function show(Category $category)

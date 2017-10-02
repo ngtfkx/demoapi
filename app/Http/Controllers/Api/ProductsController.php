@@ -30,7 +30,7 @@ class ProductsController extends Controller
 
         $product = Product::create($params);
 
-        return api_success(['data' => $product]);
+        return api_success(['data' => $product], 201);
     }
 
     public function show(Product $product)
