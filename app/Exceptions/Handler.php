@@ -3,7 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +52,39 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ValidationException) {
+            $data = [
+                'status' => 'error',
+                'message' =>'Validation error',
+                'errors' => $exception->validator->getMessageBag(),
+            ];
+            return api_error($data, 400);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            $data = [
+                'status' => 'error',
+                'message' =>'Authorization error',
+            ];
+            return api_error($data, 403);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            $data = [
+                'status' => 'error',
+                'message' =>'Authentication error. Wrong api_token',
+            ];
+            return api_error($data, 403);
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            $data = [
+                'status' => 'error',
+                'message' =>'Object not found',
+            ];
+            return api_error($data, 403);
+        }
+
         return parent::render($request, $exception);
     }
 }

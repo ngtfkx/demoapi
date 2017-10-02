@@ -4,82 +4,49 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tags\DestroyRequest;
+use App\Http\Requests\Tags\StoreRequest;
+use App\Http\Requests\Tags\UpdateRequest;
+use App\Models\Tag;
 
 class TagsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        // TODO: pagination
+
+        $items = Tag::all();
+
+        return api_success(['data' => $items]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreRequest $request)
     {
-        //
+        $params = $request->only('name');
+
+        $tag = Tag::create($params);
+
+        return api_success(['data' => $tag]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(Tag $tag)
     {
-        //
+        return api_success(['data' => $tag]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(UpdateRequest $request, Tag $tag)
     {
-        //
+        $params = $request->only('name');
+
+        $tag->update($params);
+
+        return api_success(['data' => $tag]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy(DestroyRequest $request, Tag $tag)
     {
-        //
-    }
+        $tag->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return api_success();
     }
 }

@@ -4,82 +4,49 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\DestroyRequest;
+use App\Http\Requests\Products\StoreRequest;
+use App\Http\Requests\Products\UpdateRequest;
+use App\Models\Product;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        // TODO: pagination
+
+        $items = Product::all();
+
+        return api_success(['data' => $items]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreRequest $request)
     {
-        //
+        $params = $request->only('name', 'description', 'price');
+
+        $product = Product::create($params);
+
+        return api_success(['data' => $product]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(Product $product)
     {
-        //
+        return api_success(['data' => $product]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(UpdateRequest $request, Product $product)
     {
-        //
+        $params = $request->only('name', 'description', 'price');
+
+        $product->update($params);
+
+        return api_success(['data' => $product]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy(DestroyRequest $request, Product $product)
     {
-        //
-    }
+        $product->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return api_success();
     }
 }

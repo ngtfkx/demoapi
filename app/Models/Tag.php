@@ -19,6 +19,10 @@ class Tag extends Model
         'name',
     ];
 
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     /**
      * Товары, у которых есть этот тег
      *

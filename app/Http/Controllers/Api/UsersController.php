@@ -2,84 +2,68 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Users\DestroyRequest;
+use App\Http\Requests\Users\StoreRequest;
+use App\Http\Requests\Users\UpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        // TODO: pagination
+
+        $items = User::all();
+
+        return api_success(['data' => $items]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreRequest $request)
     {
-        //
+        $user = new User;
+
+        $user->name = $request->input('name');
+
+        $user->login = $request->input('login');
+
+        $user->password = $request->input('password');
+
+        $user->email = $request->input('email');
+
+        $user->password = bcrypt($request->input('password'));
+
+        $user->api_token = str_random(64); // TODO: тут надо проверять уникаьность
+
+        $user->save();
+
+        $data = [
+            'api_token' => $user->api_token,
+        ];
+
+        return api_success($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(User $user)
     {
-        //
+        return api_success(['data' => $user]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(UpdateRequest $request, User $user)
     {
-        //
+        $params = $request->only('name');
+
+        $user->update($params);
+
+        return api_success(['data' => $user]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy(DestroyRequest $request, User $user)
     {
-        //
-    }
+        $user->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return api_success();
     }
 }

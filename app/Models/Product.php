@@ -23,6 +23,14 @@ class Product extends Model
         'user_id', 'category_id', 'price', 'name', 'description',
     ];
 
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
+    protected $casts = [
+        'price' => 'float',
+    ];
+
     /**
      * Владелец товара
      *
