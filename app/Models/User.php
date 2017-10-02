@@ -17,6 +17,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @mixin \Eloquent
+ * @property string $login Логин
+ * @property string $api_token Токен для API
  */
 class User extends Authenticatable
 {
