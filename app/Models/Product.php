@@ -24,7 +24,7 @@ class Product extends Model
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'user_id', 'category_id',
     ];
 
     protected $casts = [
@@ -39,6 +39,16 @@ class Product extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Категория товара
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Category
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

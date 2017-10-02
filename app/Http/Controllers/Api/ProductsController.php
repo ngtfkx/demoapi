@@ -48,6 +48,8 @@ class ProductsController extends Controller
 
         $items = $query->limit($limit)->get();
 
+        $items->load('user', 'category');
+
         return api_success(['data' => $items]);
     }
 
