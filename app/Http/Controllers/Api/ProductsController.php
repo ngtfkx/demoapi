@@ -7,6 +7,7 @@ use App\Http\Requests\Products\DestroyRequest;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -42,6 +43,14 @@ class ProductsController extends Controller
 
         if ($request->has('max')) {
             $query->where('price', '<=', $request->input('max'));
+        }
+
+        if ($request->has('tag')) {
+            $tag = $request->input('tag');
+
+            $query->whereHas('tags', function (Builder $query) use ($tag) {
+                $query->where('name', 'like', '%' . $tag . '%');
+            });
         }
 
         $limit = $request->input('limit', 10);
