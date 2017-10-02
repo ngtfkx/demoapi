@@ -7,6 +7,7 @@ use App\Http\Requests\Products\DestroyRequest;
 use App\Http\Requests\Products\StoreRequest;
 use App\Http\Requests\Products\UpdateRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -15,11 +16,37 @@ class ProductsController extends Controller
         $this->middleware('auth:api')->only('store', 'update', 'destroy');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         // TODO: pagination
 
-        $items = Product::all();
+        $query = Product::query();
+
+        if ($request->has('category')) {
+            // можно указывать несколько значений через запятую
+            $categoryIds = explode(',', $request->input('category'));
+
+            $query->whereIn('category_id', $categoryIds);
+        }
+
+        if ($request->has('user')) {
+            // можно указывать несколько значений через запятую
+            $userIds = explode(',', $request->input('user'));
+
+            $query->whereIn('user_id', $userIds);
+        }
+
+        if ($request->has('min')) {
+            $query->where('price', '>=', $request->input('min'));
+        }
+
+        if ($request->has('max')) {
+            $query->where('price', '<=', $request->input('max'));
+        }
+
+        $limit = $request->input('limit', 10);
+
+        $items = $query->limit($limit)->get();
 
         return api_success(['data' => $items]);
     }
