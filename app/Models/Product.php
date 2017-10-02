@@ -19,5 +19,27 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
-    //
+    protected $fillable = [
+        'user_id', 'category_id', 'price', 'name', 'description',
+    ];
+
+    /**
+     * Владелец товара
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Теги товара
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|Tag
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }

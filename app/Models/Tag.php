@@ -15,5 +15,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tag extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+    ];
+
+    /**
+     * Товары, у которых есть этот тег
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany|Product
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withTimestamps();
+    }
 }

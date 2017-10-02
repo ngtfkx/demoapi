@@ -24,21 +24,21 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'login',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token', 'api_token',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * Продукты пользователя
      *
-     * @var array
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Product
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

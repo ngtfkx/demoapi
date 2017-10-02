@@ -17,5 +17,37 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    //
+    protected $fillable = [
+        'name', 'description',
+    ];
+
+    /**
+     * Товары  категории
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Product
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Родительская категория
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|Category
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
+    /**
+     * Дочерние категории
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|Category
+     */
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
 }
