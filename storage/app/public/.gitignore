@@ -1,4 +1,4 @@
 *
 !.gitignore
-!photos
-!photos/.gitignore
+!products
+!products/.gitignore

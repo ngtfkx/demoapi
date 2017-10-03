@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $desc
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read \App\Models\User $user
+ * @property-read mixed $photo_url
  */
 class Product extends Model
 {

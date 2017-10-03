@@ -12,12 +12,24 @@ class DestroyTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * @var User $user
+     */
     protected $user;
 
+    /**
+     * @var Category $category
+     */
     protected $category;
 
+    /**
+     * @var Product $product
+     */
     protected $product;
 
+    /**
+     * @var array $data
+     */
     protected $data;
 
     protected function setUp()
@@ -29,12 +41,23 @@ class DestroyTest extends TestCase
         $this->category = factory(Category::class)->create();
 
         $this->product = $this->user->products()->save(factory(Product::class)->make([
-            'category_id' => $this->category,
+            'category_id' => $this->category->id,
         ]));
 
         $this->data = [
             'api_token' => $this->user->api_token,
         ];
+    }
+
+    public function tearDown()
+    {
+        $this->user = null;
+
+        $this->category = null;
+
+        $this->product = null;
+
+        $this->data = null;
     }
 
     public function testDestroySuccess()

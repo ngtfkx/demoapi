@@ -27,8 +27,8 @@ class CreateProductsTable extends Migration
 
             $table->string('name')->comment('Наименование');
             $table->text('description')->comment('Описание');
-            $table->string('photo')->comment('Фото');
-            $table->string('photo_desc')->comment('Описание фото');
+            $table->string('photo')->nullable()->comment('Фото');
+            $table->string('photo_desc')->nullable()->comment('Описание фото');
         });
     }
 

@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -30,6 +31,12 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
+            'photo' => 'sometimes|image',
+            'photo_desc' => 'required_with:photo',
+            'category_id' => [
+                'required',
+                Rule::exists('categories', 'id'),
+            ],
         ];
     }
 }

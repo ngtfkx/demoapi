@@ -75,12 +75,18 @@ class ProductsController extends Controller
         $product = $user->products()->save(Product::make($params));
 
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-            $filename = $user->id . '.' . $request->file('photo')->extension();
+            $filename = $product->id . '.' . $request->file('photo')->extension();
 
             $request->file('photo')->storeAs('public/products', $filename);
 
             $product->photo = $filename;
+
+            $product->photo_desc = $request->input('photo_desc');
+
+            $product->save();
         }
+
+        // TODO: сделать добавление тегов
 
         return api_success(['data' => $product], 201);
     }
@@ -92,9 +98,23 @@ class ProductsController extends Controller
 
     public function update(UpdateRequest $request, Product $product)
     {
-        $params = $request->only('name', 'description', 'price');
+        $params = $request->only('name', 'description', 'price', 'category_id');
 
         $product->update($params);
+
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $filename = $product->id . '.' . $request->file('photo')->extension();
+
+            $request->file('photo')->storeAs('public/products', $filename);
+
+            $product->photo = $filename;
+
+            $product->photo_desc = $request->input('photo_desc');
+
+            $product->save();
+        }
+
+        // TODO: сделать обновление тегов
 
         $product->load('user', 'category', 'tags');
 
