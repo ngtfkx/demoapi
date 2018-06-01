@@ -19,7 +19,7 @@ class ProductsSeeder extends Seeder
 
         $users = \App\Models\User::all();
 
-        for($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             factory(\App\Models\Product::class)->create([
                 'user_id' => $users->random()->id,
                 'category_id' => $categories->random()->id,

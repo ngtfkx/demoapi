@@ -17,18 +17,27 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
+            $table->string('name')->comment('Наименование');
+
+            $table->text('description')->comment('Описание');
+
+            $table->decimal('price',8, 2)->index()->comment('Цена');
+
+            $table->unsignedInteger('calorific')->default(0)->comment('Калорийность');
+
+            $table->boolean('is_new')->default(1)->comment('Новинка');
+
+            $table->boolean('is_top')->default(0)->comment('Топ-продаж');
+
+            $table->string('photo')->nullable()->comment('Фото');
+
+            $table->string('photo_desc')->nullable()->comment('Описание фото');
+
             $table->integer('user_id')->unsigned()->comment('Владелец товар');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->integer('category_id')->unsigned()->comment('Находится в категории');
             $table->foreign('category_id')->references('id')->on('categories');
-
-            $table->decimal('price',8, 2)->index()->comment('Цена');
-
-            $table->string('name')->comment('Наименование');
-            $table->text('description')->comment('Описание');
-            $table->string('photo')->nullable()->comment('Фото');
-            $table->string('photo_desc')->nullable()->comment('Описание фото');
         });
     }
 
