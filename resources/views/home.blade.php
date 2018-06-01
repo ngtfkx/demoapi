@@ -5,7 +5,52 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            Menu
+            <form action="">
+                <div class="form-group">
+                    <label for="query">Цена</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" name="price_from" id="price_from"
+                                   placeholder="От">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" name="price_till" id="price_till"
+                                   placeholder="До">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="query">Калорийность</label>
+                    <select class="form-control" name="calorific" id="calorific">
+                        <option value="">Выбрать</option>
+                        <option value="0">Не указана</option>
+                        <option value="1">Мало</option>
+                        <option value="2">Средне</option>
+                        <option value="3">Много</option>
+                    </select>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="is_top" id="is_top" value="1">
+                        Топ-продаж
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="is_new" id="is_new" value="1">
+                        Новинка
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="query">Описание</label>
+                    <input type="text" class="form-control" name="query" id="query" placeholder="">
+                    <p class="help-block">Поиск по наименованию, описанию товара, описанию фото.</p>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-search"></i>
+                    Искать
+                </button>
+            </form>
         </div>
         <div class="col-md-9">
             @foreach($products as $product)
