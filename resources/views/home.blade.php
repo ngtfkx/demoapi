@@ -53,6 +53,9 @@
             </form>
         </div>
         <div class="col-md-9">
+<pre>
+{!! $sql !!}
+</pre>
             @foreach($products as $product)
                 <div class="card">
                     <div>
