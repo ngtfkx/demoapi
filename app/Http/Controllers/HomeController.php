@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $builder = Product::query();
+
+        $products = $builder->get();
+
+        $data = [
+            'products' => $products,
+        ];
+
+        return view('home', $data);
     }
 }

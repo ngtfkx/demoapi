@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
 
             $table->decimal('price',8, 2)->index()->comment('Цена');
 
-            $table->unsignedInteger('calorific')->default(0)->comment('Калорийность');
+            $table->unsignedInteger('calorific')->nullable()->comment('Калорийность');
 
             $table->boolean('is_new')->default(1)->comment('Новинка');
 

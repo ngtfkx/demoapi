@@ -36,6 +36,8 @@ class Product extends Model
 
     protected $casts = [
         'price' => 'float',
+        'is_top' => 'boolean',
+        'is_new' => 'boolean',
     ];
 
     protected $appends = [
@@ -45,9 +47,9 @@ class Product extends Model
     /**
      * URL фотографии
      */
-    public function getPhotoUrlAttribute()
+    public function getPhotoUrlAttribute(): ?string
     {
-        return $this->photo ? config('app.url') . '/storage/photos/' . $this->photo : null;
+        return $this->photo ? config('app.url') . '/storage/products/' . $this->photo : null;
     }
 
     /**
@@ -55,9 +57,29 @@ class Product extends Model
      *
      * @return null|string
      */
-    public function getPhotoDescAttribute()
+    public function getPhotoDescAttribute(): ?string
     {
         return $this->photo ? $this->attributes['photo_desc'] : null;
+    }
+
+    /**
+     * Являетя ли товар топовый
+     *
+     * @return bool
+     */
+    public function isTop(): bool
+    {
+        return $this->is_top;
+    }
+
+    /**
+     * Является ли товар новый
+     *
+     * @return bool
+     */
+    public function isNew(): bool
+    {
+        return $this->is_new;
     }
 
     /**
@@ -65,7 +87,7 @@ class Product extends Model
      *
      * @return string
      */
-    public function getDescAttribute()
+    public function getDescAttribute(): string
     {
         return str_limit($this->description, config('app.desc_limit'));
     }

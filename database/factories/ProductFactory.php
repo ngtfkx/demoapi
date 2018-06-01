@@ -12,7 +12,7 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
         'is_top' => $faker->boolean(10),
         'user_id' => null,
         'category_id' => null,
-        'photo' => $faker->image(storage_path('app/public/products'), 300, 400, 'food', false),
+        'photo' => $faker->image(storage_path('app/public/products'), 200, 200, 'food', false),
         'photo_desc' => ucfirst($faker->words(3, true)),
     ];
 });
