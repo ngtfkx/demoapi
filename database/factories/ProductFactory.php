@@ -4,10 +4,10 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Product::class, function (Faker $faker) {
     return [
-        'name' => ucfirst($faker->words(3, true)),
+        'name' => ucfirst($faker->words(2, true)),
         'description' => $faker->sentences(4, true),
         'price' => $faker->numberBetween(10, 300),
-        'calorific' => $faker->optional(0.8)->numberBetween(500, 1000),
+        'calorific' => $faker->numberBetween(0, 3),
         'is_new' => $faker->boolean(10),
         'is_top' => $faker->boolean(10),
         'user_id' => null,

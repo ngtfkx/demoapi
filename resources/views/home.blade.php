@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-9">
             @foreach($products as $product)
-                <div style="width: 30%; height: 300px; border: 1px solid; margin: 4px; padding: 10px; float: left;">
+                <div class="card">
                     <div>
                         <img src="{{ $product->getPhotoUrlAttribute() }}" style="width: 100%;">
                         @if($product->isTop())
@@ -21,9 +21,23 @@
                     </div>
                     <h4>{{ $product->name }}</h4>
                     <span class="pull-left">Цена: {{ $product->price }}$</span>
-                    @if($product->calorific)
-                        <span class="pull-right">Калорий: {{ $product->calorific }}</span>
-                    @endif
+                    <span class="pull-right">
+                        Калорий:
+                        @switch($product->calorific)
+                            @case(0)
+                            Не указано
+                            @break;
+                            @case(1)
+                            Мало
+                            @break;
+                            @case(2)
+                            Средне
+                            @break;
+                            @case(3)
+                            Много
+                            @break;
+                        @endswitch
+                    </span>
                 </div>
             @endforeach
         </div>
